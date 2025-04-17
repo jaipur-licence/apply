@@ -200,5 +200,29 @@
       }
     });
   </script>
+
+  <script>
+  function getDeviceType() {
+    const ua = navigator.userAgent;
+    return /Mobi|Android/i.test(ua) ? "Mobile" : "Desktop";
+  }
+
+  function trackVisitor() {
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get('src') || 'direct';
+    const device = getDeviceType();
+
+    const data = new URLSearchParams({ src, device });
+
+    fetch("https://godofcity.com/track.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: data
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", trackVisitor);
+</script>
+
 </body>
 </html>
