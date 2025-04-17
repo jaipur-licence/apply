@@ -121,23 +121,31 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById('phoneForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const phone = document.getElementById('phone').value;
+ <script>
+document.getElementById("licenceForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    
+    const phone = document.getElementById("phone").value.trim();
 
-      if (/^\d{10}$/.test(phone)) {
-        fetch('https://godofcity.com/licence.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: 'phone=' + encodeURIComponent(phone)
-        }).then(() => {
-          window.location.href = 'https://wa.me/919982660555';
-        });
-      } else {
-        alert('Please enter a valid 10-digit phone number.');
-      }
+    fetch("https://godofcity.com/licence.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "phone=" + encodeURIComponent(phone)
+    })
+    .then(response => {
+        if (response.ok) {
+            // ✅ Redirect to WhatsApp after successful form submit
+            window.location.href = "https://wa.me/919982660555";
+        } else {
+            alert("Submission failed. Please try again.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Something went wrong.");
     });
-  </script>
+});
+</script>
+
 </body>
 </html>
