@@ -59,7 +59,7 @@
       padding: 1rem 2rem;
       border-radius: 12px;
     }
-    input[type="text"] {
+    input[type="number"] {
       padding: 0.6rem 1rem;
       border: none;
       border-radius: 6px;
@@ -95,7 +95,7 @@
       .center-content h2 {
         font-size: 1.5rem;
       }
-      input[type="text"] {
+      input[type="number"] {
         width: 200px;
       }
     }
@@ -108,44 +108,46 @@
     </div>
 
     <div class="center-content">
-      <h2>Ghar baithe licence banwao</h2>
+      <h2>Enter Your Mobile Numberrr</h2>
       <form id="phoneForm">
-        <input type="text" name="phone" id="phone" placeholder="10-digit Mobile Number" maxlength="10" required />
+        <input type="number" name="phone" id="phone" placeholder="10-digit Mobile Number" maxlength="10" required />
         <button type="submit">Submit</button>
       </form>
     </div>
 
     <div class="footer">
-      <div>&copy; 2025 Jaipur Licence ok</div>
+      <div>&copy; 2025 Jaipur Licence</div>
       <div><a href="https://instagram.com/jaipurlicence" target="_blank">Instagram</a></div>
     </div>
   </div>
 
- <script>
-document.getElementById("licenceForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    
-    const phone = document.getElementById("phone").value.trim();
+  <script>
+    document.getElementById('phoneForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const phone = document.getElementById('phone').value.trim();
 
-    fetch("https://godofcity.com/licence.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "phone=" + encodeURIComponent(phone)
-    })
-    .then(response => {
-        if (response.ok) {
-            // ✅ Redirect to WhatsApp after successful form submit
-            window.location.href = "https://wa.me/919982660555";
-        } else {
-            alert("Submission failed. Please try again.");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Something went wrong.");
+      if (/^\d{10}$/.test(phone)) {
+        fetch('https://godofcity.com/licence', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'phone=' + encodeURIComponent(phone)
+        })
+        .then(response => {
+          if (response.ok) {
+            // ✅ Redirect to WhatsApp
+            window.location.href = 'https://wa.me/919982660555';
+          } else {
+            alert("Something went wrong. Try again.");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Submission failed.");
+        });
+      } else {
+        alert('Please enter a valid 10-digit phone number.');
+      }
     });
-});
-</script>
-
+  </script>
 </body>
 </html>
